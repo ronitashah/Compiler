@@ -1,0 +1,10 @@
+I wrote a program with a while loop that looped 5000000000 times and incremented a variable by 1 each loop. This took a minute with my interpreter, but only 15 seconds with my compiler.
+This is because running machine code is simply much much faster than running an interpreter. Every machine code instruction is one-to-one with what the coputer acutally does, so it can be used to minimize the physical work done by the processor.
+Even without optimization though, the processor will massively optimize everything by itself with things like out of order execution. An interpreter cannot tak eadvantage of the speed of machine code, because even for the most simple of tasks it generates far more unnessicary and slow operations compared to an unomptimized compiler.
+
+printf reads rax do determine the number of float point arguments to the function, as it needs to treat floating points differently and have them stored in xmm register.
+Because of this, before calling printf, we need to specify there are no floating point arguments my with mov $0, %rax.
+
+The static flag specifies static linking, which means during linking the external libraries that are used are copied and placed next to the actual code. This is different to the default dynamic typing, where external libraries are not moved and the assembly is dynamically linked with them.
+The reason the static flag is used is so that distance between %rip and printf is within the size of a 32 bit signed integer, so that we can call it simply with call. If it were dynamically linked, printf would often be much further away and so calling it would be less simple.
+When I remove the static flag on my computer, it works normally. When I try the same on the lab machines it breaks, likely because in my computer printf and my assembly happened to be close enough but they weren't for the lab machines.
